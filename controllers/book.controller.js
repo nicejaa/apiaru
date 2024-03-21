@@ -54,11 +54,9 @@ const bookController = {
   },
   deleteById: async (req, res) => {
     try {
-      const { id } = req.body;
-
       const sql = "DELETE FROM books where id = $1 RETURNING *";
 
-      const { rows } = await postgre.query(sql, [id]);
+      const { rows } = await postgre.query(sql, [req.params.id]);
 
       if (rows[0]) {
         return res.json({ msg: "OK", data: rows[0] });
